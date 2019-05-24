@@ -1,0 +1,11 @@
+#!/usr/bin/with-contenv sh
+
+LIBFAKE_AVI_DECODER="${UNICORN_PREFIX}/codecs/${CODECS_BUILD}-${PLEX_ARCH}/libfake_avi_decoder.so"
+
+#npm install --prefix=${UNICORN_PREFIX}
+npm run install plex codecs eae cache --prefix=${UNICORN_PREFIX}
+
+# Download missing libfake_avi_decoder.so from the last known good codec build.. maybe this will get updated someday? Who knows..
+if [[ $(file -b --mime-type ${LIBFAKE_AVI_DECODER}) = "text/html" ]]; then
+  curl -J -L -o ${LIBFAKE_AVI_DECODER} https://downloads.plex.tv/codecs/e944d3a-1309/linux-ubuntu-x86_64/libfake_avi_decoder.so
+fi

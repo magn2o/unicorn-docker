@@ -1,0 +1,69 @@
+version: '3'
+
+services:
+  plex:
+    image: plexinc/pms-docker:latest
+    networks:
+      - plex-network
+    ports:
+      - 32400:32400/tcp
+      - 3005:3005/tcp
+      - 8324:8324/tcp
+      - 32469:32469/tcp
+      - 1900:1900/udp
+      - 32410:32410/udp
+      - 32412:32412/udp
+      - 32413:32413/udp
+      - 32414:32414/udp
+    environment:
+      - TZ=<timezone>
+      - ADVERTISE_IP=http://<hostipaddress>:3001/
+      - LB_URL=http://loadbalancer:3001/
+    volumes:
+      - plex_binaries:/usr/lib/plexmediaserver
+      - plex_database:/config
+      - plex_media:/media:ro
+    restart: unless-stopped
+
+  loadbalancer:
+    image: magn2o/unicorn-loadbalancer:latest
+    depends_on:
+      - plex
+      - redis
+    networks:
+      - plex-network
+    ports:
+      - 3001:3001/tcp
+    environment:
+      - SERVER_HOST=127.0.0.1
+      - SERVER_PORT=3001
+      - SERVER_PUBLIC=http://<hostipaddress>:3001/
+      - PLEX_HOST=plex
+      - PLEX_PORT=32400
+      - PLEX_PATH_SESSIONS=/config/Library/Application Support/Plex Media Server/Cache/Transcode/Sessions
+      - DATABASE_SQLITE_PATH=/config/Library/Application Support/Plex Media Server/Plug-in Support/Databases/com.plexapp.plugins.library.db
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - LB_URL=http://loadbalancer:3001/
+    volumes:
+      - plex_binaries:/usr/lib/plexmediaserver
+      - plex_database:/config
+      - plex_media:/media:ro
+    restart: unless-stopped
+
+  redis:
+    image: redis:alpine
+    networks:
+      - plex-network
+    sysctls:
+      - net.core.somaxconn=511
+    restart: unless-stopped
+
+volumes:
+  plex_binaries:
+  plex_database:
+  plex_media:
+
+networks:
+  plex-network:
+

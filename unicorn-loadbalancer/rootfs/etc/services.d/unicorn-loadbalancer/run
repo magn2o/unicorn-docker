@@ -1,0 +1,2 @@
+#!/usr/bin/with-contenv sh
+npm start --prefix=/opt/UnicornLoadBalancer

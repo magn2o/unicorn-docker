@@ -1,0 +1,22 @@
+#!/usr/bin/with-contenv sh
+
+PLEX_TRANSCODER="Plex Transcoder"
+PLEX_PATH_USR="${PLEX_PATH_USR:-/usr/lib/plexmediaserver/}"
+
+if [ -d "${PLEX_PATH_USR}" ]; then
+    # hardcode loadbalancer URL
+    sed -i 's@${config.URL}@'"$LB_URL"'@' /opt/UnicornFFMPEG/app.js
+
+    # build binaries
+    npm install --prefix=/opt/UnicornFFMPEG
+    npm start --prefix=/opt/UnicornFFMPEG
+
+    # backup existing binary (if it exists)
+    if [ -f "${PLEX_PATH_USR}/${PLEX_TRANSCODER}" ]; then
+      mv -n "${PLEX_PATH_USR}/${PLEX_TRANSCODER}" "${PLEX_PATH_USR}/~${PLEX_TRANSCODER}"
+      chmod 000 "${PLEX_PATH_USR}/~${PLEX_TRANSCODER}"
+    fi
+
+    # replace with new binary
+    cp -f "/opt/UnicornFFMPEG/bin/${PLEX_TRANSCODER}-linux" "${PLEX_PATH_USR}/${PLEX_TRANSCODER}"
+fi

@@ -1,0 +1,2 @@
+/etc/cont-init.d/* false root 0755 0755
+/etc/services.d/*/run false root 0755 0755

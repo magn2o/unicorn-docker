@@ -1,0 +1,9 @@
+#!/usr/bin/with-contenv sh
+
+PLEX_RELAY="Plex Relay"
+PLEX_PATH_USR="${PLEX_PATH_USR:-/usr/lib/plexmediaserver/}"
+
+if [ -f "${PLEX_PATH_USR}/${PLEX_RELAY}" ]; then
+  mv "${PLEX_PATH_USR}/Plex Relay" "${PLEX_PATH_USR}/~${PLEX_RELAY}"
+  chmod 000 "${PLEX_PATH_USR}/~${PLEX_RELAY}"
+fi

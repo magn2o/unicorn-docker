@@ -1,0 +1,43 @@
+#!/usr/bin/with-contenv sh
+
+if [ -z "${PLEX_BUILD}" ]; then
+  PLEX_BUILD=$(curl -s "${LOADBALANCER_ADDRESS}/?X-Plex-Token=${PLEX_TOKEN}" | xmllint --xpath "string(//MediaContainer/@version)" -)
+
+  if [[ $(expr match "$PLEX_BUILD" '[0-9a-z.]*-[0-9a-z]*') -eq 0 ]]; then
+    echo ""
+    echo -e "\e[41m"
+    echo -e " \e[21m WARNING: Unable to determine ${PLEX_BUILD} from ${LOADBALANCER_ADDRESS} !! "
+    echo -e " \e[21m Please check your network connection or Plex Token and try again."
+    echo -e "\e[49m"
+    echo ""
+    exit 1
+  fi
+
+  printf "${PLEX_BUILD}" > /var/run/s6/container_environment/PLEX_BUILD
+
+  curl -J -L -o /tmp/plex.deb "https://downloads.plex.tv/plex-media-server-new/${PLEX_BUILD}/debian/plexmediaserver_${PLEX_BUILD}_amd64.deb"
+  cd /tmp && ar x /tmp/plex.deb
+  tar xf data.tar.xz "./usr/lib/plexmediaserver/Plex Media Server" -C /tmp
+
+  CODECS_BUILD=$(strings "/tmp/usr/lib/plexmediaserver/Plex Media Server" | egrep '^([a-z0-9]){7}-([0-9]){4}$' | grep -v 'windows' | head -1)
+  printf "${CODECS_BUILD}" > /var/run/s6/container_environment/CODECS_BUILD
+
+  EAE_VERSION=$(strings "/tmp/usr/lib/plexmediaserver/Plex Media Server" | egrep '^eae-[a-z0-9]+-[0-9]+*$' | head -1)
+  printf "${EAE_VERSION}" > /var/run/s6/container_environment/EAE_VERSION
+
+  rm -rf /tmp/*
+
+  echo ""
+  echo -e "\e[42m"
+  echo -e " \e[21m ----------------------------------------------"
+  echo -e " \e[21m Versions:"
+  echo -e " \e[21m"
+  echo -e " \e[21m PLEX_BUILD=${PLEX_BUILD}"
+  echo -e " \e[21m CODECS_BUILD=${CODECS_BUILD}"
+  echo -e " \e[21m EAE_VERSION=${EAE_VERSION}"
+  echo -e " \e[21m ----------------------------------------------"
+  echo -e "\e[49m"
+  echo ""
+fi
+
+exit 0
