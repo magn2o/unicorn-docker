@@ -1,8 +1,8 @@
 # Unofficial Docker container for [UnicornLoadBalancer](https://github.com/UnicornTranscoder/UnicornLoadBalancer)
 
-# magn2o/unicorn-loadbalancer
+I created these containers in an effort to make deploying [UnicornTranscoder](https://github.com/UnicornTranscoder) quick and painless in a docker environment. The unicorn-loadbalancer container includes both UnicornLoadBalancer *as well as* UnicornFFMPEG. In addition to this container, you will also need at least one instance of [unicorn-transcoder](https://hub.docker.com/r/magn2o/unicorn-transcoder).
 
-I created these containers in an effort to make deploying [UnicornTranscoder](https://github.com/UnicornTranscoder) quick and painless in a docker environment. This container includes both UnicornLoadBalancer *as well as* UnicornFFMPEG. In addition to this container, you will also need at least one instance of [unicorn-transcoder](https://hub.docker.com/r/magn2o/unicorn-transcoder).
+# magn2o/unicorn-loadbalancer
 
 Ideally, this container should be used behind a reverse SSL proxy.
 
@@ -33,8 +33,6 @@ magn2o/unicorn-loadbalancer
 ~~~
 
 # magn2o/unicorn-transcoder
-
-I created these containers in an effort to make deploying [UnicornTranscoder](https://github.com/UnicornTranscoder) quick and painless in a docker environment. This container includes just UnicornTranscoder. In addition to this container, you will also need an instance of [unicorn-loadbalancer](https://hub.docker.com/r/magn2o/unicorn-loadbalancer).
 
 One of the unique features of this container is that it will automagically identify the Plex version and necessary codec builds at runtime. This means that you can update your Plex server at will and then simplly restart this container to **maintain version parity without any manual edits**.
 
