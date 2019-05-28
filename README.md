@@ -36,8 +36,6 @@ magn2o/unicorn-loadbalancer
 
 One of the unique features of this container is that it will automagically identify the Plex version and necessary codec builds at runtime. This means that you can update your Plex server at will and then simply restart this container to **maintain version parity without any manual edits**.
 
-Ideally, this container should be used behind a reverse SSL proxy.
-
 ## Usage
 
 ~~~
