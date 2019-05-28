@@ -10,7 +10,7 @@ Ideally, this container should be used behind a reverse SSL proxy.
 
 It is strongly advised to use this within a proper [docker-compose](https://github.com/magn2o/unicorn-docker/blob/master/docker-compose.yml.template) configuration. However, should you wish to do things the hard way, please see below:
 
-Note: You will want to ensure that you have a Plex container already configured and running before launching a load balancer.
+**Note**: You will want to ensure that you have a Plex container already configured and running before launching a load balancer.
 
 ~~~
 docker run \  
