@@ -1,0 +1,13 @@
+#!/usr/bin/with-contenv sh
+
+if [ -z "$SERVER_TOKEN" ]; then
+  SERVER_TOKEN=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 20 | head -n 1)
+  printf "${SERVER_TOKEN}" > /var/run/s6/container_environment/EAE_VERSION
+fi
+
+echo ""
+echo -e "\e[42m"
+echo -e " \e[21m ----------------------------------------------"
+echo -e " \e[21m Your server token is: ${SERVER_TOKEN}"
+echo -e " \e[21m ----------------------------------------------\e[49m"
+echo ""
