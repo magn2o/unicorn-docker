@@ -6,7 +6,8 @@ ARG S6_OVERLAY_VERSION="1.22.1.0"
 
 ENV \
   PLEX_ARCH="amd64" \
-  UNICORN_PREFIX="/opt/UnicornTranscoder"
+  UNICORN_PREFIX="/opt/UnicornTranscoder" \
+  DEBUG=Unicorn*
 
 RUN \
   apk add --no-cache npm git curl libxml2-utils binutils file && \
