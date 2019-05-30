@@ -20,7 +20,7 @@ docker run \
 -e SERVER_HOST="127.0.0.1" \
 -e SERVER_PORT="3001" \
 -e SERVER_PUBLIC="http://[hostipaddress]:3001/" \
--e SERVER_TOKEN="[token]"
+-e SERVER_TOKEN="[token]" \
 -e PLEX_HOST="[plexipaddress]" \
 -e PLEX_PORT="32400" \
 -e PLEX_PATH_SESSIONS="/config/Library/Application Support/Plex Media Server/Cache/Transcode/Sessions" \
@@ -46,10 +46,10 @@ docker run \
 --name unicorn-transcoder \
 -p 3000:32400/tcp \
 -e SERVER_PORT="32400" \
+-e SERVER_TOKEN="[loadbalancertoken]" \
 -e LOADBALANCER_ADDRESS="http://[loadbalanceripaddress]:3001" \
 -e INSTANCE_ADDRESS="http://[hostipaddress]:3000" \
--e PLEX_TOKEN="[x-plex-token]"
--e SERVER_TOKEN="[loadbalancertoken]"
+-e PLEX_TOKEN="[x-plex-token]" \
 -h [hostname] \
 magn2o/unicorn-transcoder
 ~~
