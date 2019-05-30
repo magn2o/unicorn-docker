@@ -15,7 +15,7 @@ RUN \
   apk add --allow-untrusted /tmp/glibc-${GLIBC_VERSION}.apk && \
   ln -s /lib/libz.so.1 /usr/glibc-compat/lib/libz.so.1 && \
   ln -s /lib/libc.musl-x86_64.so.1 /usr/glibc-compat/lib/libc.musl-x86_64.so.1 && \
-  git -C /opt clone https://github.com/UnicornTranscoder/UnicornTranscoder.git && \
+  git -C /opt clone https://github.com/magn2o/UnicornTranscoder.git && \
   npm install --prefix=${UNICORN_PREFIX} && \
   apk del git && \
   rm -rf /var/cache/apk/* /tmp/*
