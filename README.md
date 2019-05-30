@@ -12,7 +12,7 @@ It is strongly advised to use this within a proper [docker-compose](https://gith
 
 **Note**: You will want to ensure that you have a Plex container already configured and running before launching a load balancer.
 
-~~
+~~~
 docker run \  
 -d \
 --name unicorn-loadbalancer \
@@ -31,7 +31,7 @@ docker run \
 -v [path]:/config \
 -v [path]:/media:ro \
 magn2o/unicorn-loadbalancer
-~~
+~~~
 
 # magn2o/unicorn-transcoder
 
@@ -39,7 +39,7 @@ One of the unique features of this container is that it will automagically ident
 
 ## Usage
 
-~~
+~~~
 docker run \  
 -d \
 --rm \
@@ -52,4 +52,4 @@ docker run \
 -e PLEX_TOKEN="[x-plex-token]" \
 -h [hostname] \
 magn2o/unicorn-transcoder
-~~
+~~~
