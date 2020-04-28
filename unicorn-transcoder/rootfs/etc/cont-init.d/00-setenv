@@ -22,7 +22,7 @@ if [ -z "${PLEX_BUILD}" ]; then
   CODECS_BUILD=$(strings "/tmp/usr/lib/plexmediaserver/Plex Media Server" | egrep '^([a-z0-9]){7}-([0-9]){4}$' | grep -v 'windows' | head -1)
   printf "${CODECS_BUILD}" > /var/run/s6/container_environment/CODECS_BUILD
 
-  EAE_VERSION=$(strings "/tmp/usr/lib/plexmediaserver/Plex Media Server" | egrep '^eae-[a-z0-9]+-[0-9]+*$' | head -1)
+  EAE_VERSION=$( printf "eae-`strings "/tmp/usr/lib/plexmediaserver/Plex Media Server" | egrep '^EasyAudioEncoder-eae-[0-9a-f]{7}-$' | cut -d- -f3`-42")
   printf "${EAE_VERSION}" > /var/run/s6/container_environment/EAE_VERSION
 
   rm -rf /tmp/*
